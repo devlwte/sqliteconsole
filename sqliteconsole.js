@@ -3,11 +3,8 @@ const { app, BrowserWindow, dialog } = require('electron');
 const path = require("path");
 const fs = require("fs");
 
-// UtilNode
-const UtilNode = require("../../modules/utilnode");
-const utilnode = new UtilNode({
-    electron: { dialog, BrowserWindow }
-});
+// UtilCode
+const utilcode = require("../../modules/utilcodes")
 
 // Manager
 const DatabaseManager = require("./app/module/db")
@@ -32,7 +29,7 @@ const routes = [
             let { databaseName, ext, password } = req.body;
             // open folder
             try {
-                const folder_open = await utilnode.openFolder();
+                const folder_open = await utilcode.openFolder();
                 await databasemanager.createDatabase(folder_open, { databaseName, ext, password });
                 res.send({
                     active: databasemanager.active,
@@ -49,7 +46,7 @@ const routes = [
         handler: async (req, res) => {
             // open folder
             try {
-                const selectedFile = await utilnode.openFile({
+                const selectedFile = await utilcode.openFile({
                     title: "Seleccionar archivo de base de datos",
                     filters: [
                         {
